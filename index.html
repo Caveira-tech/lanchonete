@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Lanches - Peça Já!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🍔 Central Lanches</h1>
+                <div class="header-right">
+                    <button class="cart-btn" id="cartBtn">
+                        🛒 Carrinho <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                </div>
+                <div id="storeSchedule" class="store-schedule" aria-live="polite"></div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Lanches Section -->
+            <section class="menu-section">
+                <h2 class="section-title">🍟 Lanches</h2>
+                <div class="products-grid" id="lanchesGrid">
+                    <!-- Produtos serão inseridos aqui -->
+                </div>
+            </section>
+
+            <!-- Bebidas Section -->
+            <section class="menu-section">
+                <h2 class="section-title">🥤 Bebidas</h2>
+                <div class="products-grid" id="bebidasGrid">
+                    <!-- Produtos serão inseridos aqui -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Product Selection Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content modal-product">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Selecionar Produto</h2>
+                <button class="close-btn" id="closeProductModalBtn">&times;</button>
+            </div>
+            <div class="product-modal-body">
+                <div class="product-modal-image" id="productModalImage"></div>
+                <div class="product-modal-info">
+                    <h3 id="productModalName"></h3>
+                    <p id="productModalDescription"></p>
+                    <div class="product-modal-price" id="productModalPrice"></div>
+                </div>
+            </div>
+            <div class="selection-section">
+                <label>Quantidade:</label>
+                <div class="quantity-control">
+                    <button id="decreaseQtyBtn" class="qty-btn">−</button>
+                    <input type="number" id="quantityInput" value="1" min="1" max="99">
+                    <button id="increaseQtyBtn" class="qty-btn">+</button>
+                </div>
+            </div>
+            <div class="selection-section">
+                <label>Observações (Adicional, sem cebola, etc):</label>
+                <textarea id="observationsInput" placeholder="Digite suas observações aqui..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" id="cancelProductBtn">Cancelar</button>
+                <button class="confirm-btn" id="confirmAddBtn">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Seu Carrinho</h2>
+                <button class="close-btn" id="closeCartBtn">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <p class="empty-cart">Seu carrinho está vazio</p>
+            </div>
+            <!-- Seção de pagamento -->
+            <div class="payment-section" id="paymentSection">
+                <h4>Forma de pagamento</h4>
+                <label class="payment-option"><input type="radio" name="payment" value="Pix"> Pix</label>
+                <label class="payment-option"><input type="radio" name="payment" value="Cartão"> Cartão</label>
+                <label class="payment-option"><input type="radio" name="payment" value="Dinheiro"> Dinheiro</label>
+                <div class="order-note">
+                    <label for="orderNoteInput">Observações do pedido</label>
+                    <textarea id="orderNoteInput" placeholder="Ex.: deixar na portaria, trocar maionese" rows="3"></textarea>
+                </div>
+                <div class="delivery-address">
+                    <label for="deliveryAddressInput">Endereço de entrega</label>
+                    <input type="text" id="deliveryAddressInput" placeholder="Rua, número, complemento, bairro" />
+                    <div class="location-actions">
+                        <button id="sendLocationBtn" type="button">Enviar localização atual</button>
+                        <span id="deliveryAddressDisplay" class="delivery-address-display"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Total:</strong>
+                    <span id="cartTotal">R$ 0.00</span>
+                    <div class="payment-chosen">Forma: <span id="selectedPaymentDisplay">Pix</span></div>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn">Finalizar Pedido</button>
+            </div>
+
+            <!-- Avaliação de Satisfação -->
+            <div class="rating-section" id="ratingSection">
+                <h3>Avalie sua experiência</h3>
+                <div class="stars" id="ratingStars" aria-label="Avaliação de 1 a 5 estrelas">
+                    <button class="star" data-value="1" aria-label="1 estrela">☆</button>
+                    <button class="star" data-value="2" aria-label="2 estrelas">☆</button>
+                    <button class="star" data-value="3" aria-label="3 estrelas">☆</button>
+                    <button class="star" data-value="4" aria-label="4 estrelas">☆</button>
+                    <button class="star" data-value="5" aria-label="5 estrelas">☆</button>
+                </div>
+                <div class="rating-info" id="ratingInfo">Nenhuma avaliação ainda</div>
+                <button id="removeRatingBtn" class="remove-rating-btn" type="button">Remover minha avaliação</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

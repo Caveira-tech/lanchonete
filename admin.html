@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Central Lanches</title>
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>🍔 Central Lanches</h1>
+                <p>Painel Administrativo</p>
+            </div>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="username">Usuário:</label>
+                    <input type="text" id="username" required placeholder="Digite seu usuário">
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" required placeholder="Digite sua senha">
+                </div>
+                <div id="loginError" class="login-error"></div>
+                <button type="submit" class="login-btn">Entrar</button>
+            </form>
+            <div class="login-info">
+                <p>Entre com suas credenciais para acessar o painel administrativo.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-container" id="adminContainer" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="admin-header-content">
+                <h1>🍔 Central Lanches - Admin</h1>
+                <button class="logout-btn" id="logoutBtn">Sair</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Navigation Tabs -->
+            <nav class="admin-nav">
+                <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+                <button class="nav-btn" data-tab="products">Produtos</button>
+                <button class="nav-btn" data-tab="orders">Pedidos</button>
+                <button class="nav-btn" data-tab="settings">Configurações</button>
+            </nav>
+
+            <!-- Dashboard Tab -->
+            <section class="tab-content active" id="dashboard-tab">
+                <h2>Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <h3>Total de Pedidos</h3>
+                            <p class="stat-number" id="totalOrders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            <h3>Receita Total</h3>
+                            <p class="stat-number" id="totalRevenue">R$ 0.00</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🍔</div>
+                        <div class="stat-info">
+                            <h3>Produtos Ativos</h3>
+                            <p class="stat-number" id="activeProducts">16</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👤</div>
+                        <div class="stat-info">
+                            <h3>Clientes</h3>
+                            <p class="stat-number" id="totalCustomers">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card schedule-card" id="dashboardScheduleCard">
+                        <div class="stat-icon">🕒</div>
+                        <div class="stat-info">
+                            <h3>Horário de Funcionamento</h3>
+                            <div id="dashboardScheduleContent">Nenhuma configuração</div>
+                            <div style="margin-top:8px;"><button id="editScheduleBtn" class="btn-edit">Editar Horário</button></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Tab -->
+            <section class="tab-content" id="products-tab">
+                <div class="products-header">
+                    <h2>Gerenciar Produtos</h2>
+                    <button class="add-product-btn" id="addProductBtn">+ Novo Produto</button>
+                </div>
+
+                <div class="products-filter">
+                    <select id="categoryFilter">
+                        <option value="">Todas as categorias</option>
+                        <option value="lanches">Lanches</option>
+                        <option value="bebidas">Bebidas</option>
+                    </select>
+                    <input type="text" id="searchProduct" placeholder="Buscar produto...">
+                </div>
+
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Imagem</th>
+                            <th>Categoria</th>
+                            <th>Preço</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Produtos serão inseridos aqui -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Orders Tab -->
+            <section class="tab-content" id="orders-tab">
+                <h2>Histórico de Pedidos</h2>
+                <div class="orders-filter">
+                    <select id="orderStatus">
+                        <option value="">Todos os status</option>
+                        <option value="pendente">Pendente</option>
+                        <option value="enviado">Enviado</option>
+                        <option value="entregue">Entregue</option>
+                    </select>
+                </div>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Itens</th>
+                            <th>Total</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <tr>
+                            <td colspan="5" class="no-data">Nenhum pedido registrado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Settings Tab -->
+            <section class="tab-content" id="settings-tab">
+                <h2>Configurações</h2>
+                <div class="settings-form">
+                    <div class="form-group">
+                        <label for="whatsappNumber">Número WhatsApp (com código do país):</label>
+                        <input type="text" id="whatsappNumber" placeholder="5585999999999" value="5585999999999">
+                    </div>
+                    <div class="form-group">
+                        <label for="storeName">Nome da Loja:</label>
+                        <input type="text" id="storeName" placeholder="Central Lanches" value="Central Lanches">
+                    </div>
+                    <div class="form-group">
+                        <label for="storePhone">Telefone da Loja:</label>
+                        <input type="text" id="storePhone" placeholder="(85) 99999-9999" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="storeAddress">Endereço:</label>
+                        <textarea id="storeAddress" placeholder="Endereço da sua loja"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Localização da Loja:</label>
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            <button type="button" id="sendStoreLocationBtn">Enviar localização atual</button>
+                            <div id="storeLocationDisplay" style="font-size:13px;color:#444;word-break:break-word;"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Horário de Funcionamento:</label>
+                        <div id="scheduleSection">
+                            <!-- Schedule rows serão renderizados pelo JS -->
+                        </div>
+                    </div>
+                    <button class="save-settings-btn" id="saveSettingsBtn">Salvar Configurações</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Novo Produto</h2>
+                <button class="close-btn" id="closeProductModal">&times;</button>
+            </div>
+            <form class="product-form" id="productForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productName">Nome do Produto:</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Preço:</label>
+                        <input type="number" id="productPrice" step="0.01" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productCategory">Categoria:</label>
+                        <select id="productCategory" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="lanches">Lanches</option>
+                            <option value="bebidas">Bebidas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">URL da Imagem:</label>
+                        <input type="url" id="productImage" required>
+                        <div style="margin-top:6px;">
+                            <label for="productImageSelect">Imagens da pasta:</label>
+                            <select id="productImageSelect" style="display:block;width:100%;margin-top:6px;">
+                                <option value="">Selecionar imagem existente</option>
+                            </select>
+                        </div>
+                        <div style="margin-top:6px;display:flex;gap:8px;align-items:center;">
+                            <input type="file" id="productImageFile" accept="image/*" style="display:block;">
+                            <div class="image-preview" style="margin-top:0px;">
+                                <img id="productImagePreview" src="" alt="Preview" style="max-width:120px;max-height:80px;border-radius:6px;display:none;border:1px solid #ddd;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Descrição:</label>
+                    <textarea id="productDescription" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" id="cancelProductBtn">Cancelar</button>
+                    <button type="submit" class="btn-save">Salvar Produto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>
